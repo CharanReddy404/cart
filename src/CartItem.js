@@ -12,45 +12,37 @@ const styles = {
 
 class CartItem extends React.Component {
 
-    constructor() {
-        super();
-        this.state = {
-            price: 999,
-            title: 'Mobile Phone',
-            qty: 1,
-            image: ''
-        }
-    }
 
-    increaseQuantity = () => {
-        // this.setState({
-        //     qty: this.state.qty + 1,
-        // })
-        this.setState((prev) => {
-            return {
-                qty: prev.qty + 1
-            };
-        })
-    }
+    // increaseQuantity = () => {
+    //     // this.setState({
+    //     //     qty: this.state.qty + 1,
+    //     // })
+    //     this.setState((prev) => {
+    //         return {
+    //             qty: prev.qty + 1
+    //         };
+    //     })
+    // }
 
-    decreaseQuantity = () => {
-        const { qty } = this.state;
-        if (qty === 0) {
-            return;
-        }
+    // decreaseQuantity = () => {
+    //     const { qty } = this.state;
+    //     if (qty === 0) {
+    //         return;
+    //     }
 
-        this.setState((prev) => {
-            return {
-                qty: prev.qty - 1
-            };
-        })
-        // this.setState({
-        //     qty: this.state.qty - 1,
-        // })
-    }
+    //     this.setState((prev) => {
+    //         return {
+    //             qty: prev.qty - 1
+    //         };
+    //     })
+    //     // this.setState({
+    //     //     qty: this.state.qty - 1,
+    //     // })
+    // }
 
     render() {
-        const { price, title, qty, image } = this.state;
+        const { price, title, qty, image } = this.props.product;
+        const { product, onIncreaseQty, onDecreaseQty, onDeleteProduct } = this.props;
 
         return (
             <div className="cart-item">
@@ -65,19 +57,19 @@ class CartItem extends React.Component {
                         { }
                         <img
                             alt="increase"
-                            onClick={this.increaseQuantity}
+                            onClick={() => { onIncreaseQty(product) }}
                             className="action-icons"
                             src="https://cdn-icons-png.flaticon.com/512/1828/1828925.png"
                         />
                         <img
                             alt="decrease"
-                            onClick={this.decreaseQuantity}
+                            onClick={() => { onDecreaseQty(product) }}
                             className="action-icons"
                             src="https://cdn-icons-png.flaticon.com/512/56/56889.png"
                         />
                         <img
                             alt="delete"
-                            // onClick={ }
+                            onClick={() => { onDeleteProduct(title) }}
                             className="action-icons"
                             src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png"
                         />
