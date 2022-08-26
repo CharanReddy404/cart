@@ -2,7 +2,7 @@ import React from "react";
 import Cart from "./Cart";
 import NavBar from "./Navbar";
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCDE1IYVvvyRj4n6RyqJTXYQ2NTikdXW2w",
@@ -27,26 +27,46 @@ class App extends React.Component {
 
     componentDidMount() {
 
-        async function getProducrs(db) {
-            const productCol = collection(db, 'products');
-            // console.log(productCol)
-            const productSnapshot = await getDocs(productCol);
-            // console.log(productSnapshot)
-            const productList = productSnapshot.docs.map(doc => {
-                const data = doc.data();
-                data['id'] = doc.id;
-                return data;
-            });
-            // console.log(productList)
-            return productList;
-        }
-        getProducrs(db)
-            .then((data) => {
-                console.log(data);
-                this.setState({ products: data, Loading: false })
-            });
+        this.readData();
+        // onSnapshot(querySnapshot, (docSnapshot) => {
+        //     if (docSnapshot.exists()) {
+        //         const docData = docSnapshot.data();
+        //         console.log("auto", docData)
+        //     }
+        // });
+
+
+        // async function getProducrs(db) {
+        //     const productCol = collection(db, 'products');
+        //     // console.log(productCol)
+        //     const productSnapshot = await getDocs(productCol);
+        //     // console.log(productSnapshot)
+        //     const productList = productSnapshot.docs.map(doc => {
+        //         const data = doc.data();
+        //         data['id'] = doc.id;
+        //         return data;
+        //     });
+        //     // console.log(productList)
+        //     return productList;
+        // }
+        // getProducrs(db)
+        //     .then((data) => {
+        //         console.log(data);
+        //         this.setState({ products: data, Loading: false })
+        //     });
         // console.log(data)
 
+    }
+
+    readData = async () => {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        const productList = querySnapshot.docs.map((doc) => {
+            const data = doc.data();
+            data['id'] = doc.id;
+            console.log(doc.data());
+            return data;
+        });
+        this.setState({ products: productList, Loading: false });
     }
 
     onIncreaseQty = (product) => {
@@ -96,11 +116,26 @@ class App extends React.Component {
         return total;
     }
 
+    addProduct = async () => {
+        try {
+            const docRef = await addDoc(collection(db, "products"), {
+                title: 'TV',
+                qty: 1,
+                price: 49999,
+                img: 'https://d1rlzxa98cyc61.cloudfront.net/catalog/product/cache/1801c418208f9607a371e61f8d9184d9/1/7/174299_2020.jpg'
+            });
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    }
+
     render() {
         const { products, Loading } = this.state;
         return (
             <div className="App">
                 <NavBar count={this.getCartCount()} />
+                <button onClick={this.addProduct} style={{ padding: 10, fontSize: 20 }}>Add Product</button>
                 <Cart
                     products={products}
                     onIncreaseQty={this.onIncreaseQty}

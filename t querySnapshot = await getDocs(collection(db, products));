@@ -1,0 +1,47 @@
+[33mcommit fbd20c937eb4a88632dd0394a5856ca5bbfc17ee[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Charan <charanlucky6143@gmail.com>
+Date:   Fri Aug 26 13:53:06 2022 +0530
+
+    added entries to firebase and feaching data
+
+[33mcommit e684d6ada50a95140721d59af51439c306a064d3[m
+Author: Charan <charanlucky6143@gmail.com>
+Date:   Thu Aug 25 20:07:48 2022 +0530
+
+    added firebase
+
+[33mcommit 9785e9fa76197d9c20b24441f3f4f0c56708d2a5[m
+Author: Charan <charanlucky6143@gmail.com>
+Date:   Wed Aug 24 16:16:20 2022 +0530
+
+    Add Navbar and total price
+
+[33mcommit 952210eb556250eb4dcc395f786d2bf6623e4d86[m
+Author: Charan <charanlucky6143@gmail.com>
+Date:   Wed Aug 24 15:15:54 2022 +0530
+
+    added delete product to the card
+
+[33mcommit e50ff4ad4691e68fc67487b4011003560ca09df6[m
+Author: Charan <charanlucky6143@gmail.com>
+Date:   Wed Aug 24 13:55:04 2022 +0530
+
+    added card
+
+[33mcommit f05af0d14897f8b9c42a4398e257449b4d0980d9[m
+Author: Charan <charanlucky6143@gmail.com>
+Date:   Tue Aug 23 14:58:27 2022 +0530
+
+    add state increase and decrease to state
+
+[33mcommit b3215be83338bf620bf4a051a15f17b851270354[m
+Author: Charan <charanlucky6143@gmail.com>
+Date:   Tue Aug 23 07:53:44 2022 +0530
+
+    update
+
+[33mcommit 8339422c0ae2e62f7e8f186ff10f3591e39e6871[m
+Author: Charan <charanlucky6143@gmail.com>
+Date:   Mon Aug 22 19:23:26 2022 +0530
+
+    Initialize project using Create React App
