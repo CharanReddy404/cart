@@ -2,7 +2,7 @@ import React from "react";
 import Cart from "./Cart";
 import NavBar from "./Navbar";
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, onSnapshot } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCDE1IYVvvyRj4n6RyqJTXYQ2NTikdXW2w",
@@ -27,13 +27,37 @@ class App extends React.Component {
 
     componentDidMount() {
 
-        this.readData();
-        // onSnapshot(querySnapshot, (docSnapshot) => {
+
+        onSnapshot(collection(db, 'products'), (snapshot) => {
+            const productList = snapshot.docs.map(doc => {
+                const data = doc.data()
+                data['id'] = doc.id;
+                return data;
+            });
+            console.log(productList);
+            this.setState({ products: productList, Loading: false })
+        })
+        // this.readData();
+        // const querySnapshot = await getDocs(collection(db, "products"));
+        // const productList = querySnapshot.docs.map((doc) => {
+        //     const data = doc.data();
+        //     data['id'] = doc.id;
+        //     console.log(doc.data());
+        //     return data;
+        // });
+        // const unsub = await onSnapshot(querySnapshot, (docSnapshot) => {
         //     if (docSnapshot.exists()) {
-        //         const docData = docSnapshot.data();
-        //         console.log("auto", docData)
+        //         const getProducts = [];
+        //         docSnapshot.forEach((doc) => {
+        //             const product = doc.data();
+        //             product.id = doc.id;
+        //             getProducts.push(product);
+        //         })
+        //         console.log(getProducts)
+        //         this.setState({ products: getProducts, Loading: false });
         //     }
         // });
+        // this.setState({ products: productList, Loading: false });
 
 
         // async function getProducrs(db) {
@@ -56,17 +80,6 @@ class App extends React.Component {
         //     });
         // console.log(data)
 
-    }
-
-    readData = async () => {
-        const querySnapshot = await getDocs(collection(db, "products"));
-        const productList = querySnapshot.docs.map((doc) => {
-            const data = doc.data();
-            data['id'] = doc.id;
-            console.log(doc.data());
-            return data;
-        });
-        this.setState({ products: productList, Loading: false });
     }
 
     onIncreaseQty = (product) => {
@@ -124,7 +137,6 @@ class App extends React.Component {
                 price: 49999,
                 img: 'https://d1rlzxa98cyc61.cloudfront.net/catalog/product/cache/1801c418208f9607a371e61f8d9184d9/1/7/174299_2020.jpg'
             });
-            console.log("Document written with ID: ", docRef.id);
         } catch (e) {
             console.error("Error adding document: ", e);
         }
